@@ -1,0 +1,16 @@
+---
+title: A title for this Friday's note
+date: 2026-09-25
+category: Research
+excerpt: One or two sentences that will appear on the blog archive.
+---
+
+Write the introduction here. Each blank line starts a new paragraph.
+
+## A section heading
+
+Write more here. You can use **bold**, *italics*, and [links](https://example.com).
+
+To include a photo already added to the website's images folder:
+
+![A description of the photo](../images/photo-name.jpeg)
