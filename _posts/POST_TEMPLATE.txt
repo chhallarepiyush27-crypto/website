@@ -1,4 +1,5 @@
 ---
+layout: post
 title: A title for this Friday's note
 date: 2026-09-25
 category: Research

@@ -1,0 +1,4 @@
+timezone: America/New_York
+permalink: /posts/:year-:month-:day-:title.html
+exclude:
+  - BLOG_PUBLISHING.md

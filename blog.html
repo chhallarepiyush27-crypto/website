@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,7 +33,15 @@
   <section class="blog-intro section"><div class="wrap blog-intro-grid"><div class="blog-intro-photo reveal"><img src="images/piyush-riverside.jpeg" alt="Piyush by the Chicago River" width="2048" height="1536" loading="lazy"><span>Outside the lab · Chicago, 2026</span></div><div class="blog-intro-copy reveal"><span class="kicker">Why this space exists</span><h2>There's more to a question than its answer.</h2><p>I’m a physicist learning to build in the world of semiconductor devices and circuits. Some weeks are about an experiment or a design problem. Others are about a new city, a conversation, or finding perspective away from the lab.</p><p>This is where I’ll share the process behind the milestones: what I’m learning, what surprised me, and what I’m still trying to understand.</p><a class="arrow-link" href="aboutme.html">Get to know me ↗</a></div></div></section>
   <section class="blog-archive section" id="friday-posts"><div class="wrap"><div class="blog-section-head"><div><span class="kicker">The weekly archive</span><h2>Friday Notes<span class="accent-dot">.</span></h2></div><p>A growing collection of ideas, experiments, and little discoveries. New writing will appear here as it’s published.</p></div>
     <!-- BLOG_POSTS_START -->
+    {% if site.posts.size > 0 %}
+    <div class="blog-post-grid">
+      {% for post in site.posts %}
+      <article class="blog-post-card"><span class="blog-post-meta">{{ post.category | escape }} · <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%B %-d, %Y' }}</time></span><h3>{{ post.title | escape }}</h3><p>{{ post.excerpt | strip_html | escape }}</p><a href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">Read the note ↗</a></article>
+      {% endfor %}
+    </div>
+    {% else %}
     <div class="blog-empty"><span class="blog-empty-num">01 / SOON</span><div><h3>The first Friday note is on its way.</h3><p>Until then, explore the moments that brought me here below.</p></div><span class="blog-empty-spark" aria-hidden="true">✳</span></div>
+    {% endif %}
     <!-- BLOG_POSTS_END -->
   </div></section>
   <section class="blog-moments section"><div class="wrap"><div class="blog-section-head"><div><span class="kicker">A few recent moments</span><h2>Along the way<span class="accent-dot">.</span></h2></div><p>Short updates from research and life. The Friday posts above will leave more room for the stories behind them.</p></div><div class="blog-moment-grid">
