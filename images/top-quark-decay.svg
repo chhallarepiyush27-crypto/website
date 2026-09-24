@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" role="img" aria-labelledby="title desc">
+  <title id="title">Leptonic top quark decay</title>
+  <desc id="desc">A top quark decays into a bottom quark and a W plus boson; the W plus decays into a positively charged lepton and a neutrino.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="1"><stop stop-color="#142b3a"/><stop offset="1" stop-color="#0d202d"/></linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#6bbcaf" opacity=".08"/></pattern>
+  </defs>
+  <rect width="720" height="400" rx="20" fill="url(#background)"/>
+  <rect width="720" height="400" rx="20" fill="url(#grid)"/>
+  <text x="38" y="45" fill="#a7decf" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2">TOP QUARK · LEPTONIC DECAY</text>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M75 185H248M248 185L412 94M414 260L637 207M414 260L637 331" stroke="#e6f4f2" stroke-width="3.5"/>
+    <path d="M248.0,185.0 L249.4,186.2 250.6,188.0 252.1,189.3 254.1,189.1 256.8,187.6 259.7,185.6 262.0,184.9 263.2,186.8 263.1,191.3 262.9,196.3 263.5,199.4 265.3,199.8 268.4,197.5 272.0,193.9 275.2,191.1 277.4,190.6 278.3,193.1 278.2,197.7 278.0,202.7 278.5,206.1 280.2,206.7 283.1,204.6 286.7,201.1 290.1,198.1 292.4,197.4 293.4,199.6 293.4,204.1 293.1,209.1 293.5,212.7 295.1,213.6 297.9,211.7 301.5,208.2 304.9,205.1 307.3,204.1 308.4,206.1 308.5,210.4 308.2,215.5 308.5,219.3 309.9,220.4 312.7,218.8 316.2,215.3 319.7,212.1 322.2,210.9 323.5,212.6 323.6,216.8 323.3,221.9 323.5,225.8 324.8,227.3 327.5,225.8 331.0,222.5 334.5,219.2 337.2,217.7 338.5,219.2 338.7,223.1 338.4,228.2 338.5,232.4 339.8,234.1 342.3,232.9 345.8,229.7 349.3,226.2 352.1,224.6 353.5,225.7 353.8,229.5 353.5,234.6 353.6,238.9 354.7,240.9 357.1,239.9 360.5,236.8 364.1,233.3 366.9,231.4 368.5,232.3 368.9,235.9 368.6,240.9 368.6,245.4 369.6,247.6 371.9,246.9 375.3,243.9 378.9,240.4 381.8,238.3 383.5,238.9 384.0,242.3 383.8,247.3 383.7,251.9 384.6,254.4 386.8,253.9 390.0,251.1 393.6,247.5 396.7,245.2 398.5,245.6 399.1,248.7 398.9,253.7 398.8,258.2 400.0,260.1 402.3,259.4 405.2,257.4 407.9,255.9 409.9,255.7 411.4,257.0 412.6,258.8 414.0,260.0" stroke="#6ed6be" stroke-width="3.5"/>
+  </g>
+  <circle cx="248" cy="185" r="6" fill="#6ed6be"/><circle cx="414" cy="260" r="6" fill="#6ed6be"/>
+  <g font-family="Arial,sans-serif" font-size="25" font-style="italic" font-weight="600" fill="#f2f8f6">
+    <text x="81" y="164">t</text><text x="426" y="88">b</text><text x="643" y="207">ℓ<tspan baseline-shift="super" font-size="15">+</tspan></text><text x="643" y="339">ν<tspan baseline-shift="sub" font-size="15">ℓ</tspan></text>
+  </g>
+  <text x="325" y="173" fill="#77dbc3" font-family="Arial,sans-serif" font-size="23" font-style="italic" font-weight="600">W<tspan baseline-shift="super" font-size="14">+</tspan></text>
+  <text x="40" y="369" fill="#a5bec7" font-family="Arial,sans-serif" font-size="12">Illustrative decay channel · t → bW⁺ → bℓ⁺νℓ</text>
+</svg>
