@@ -1,4 +1,7 @@
 timezone: America/New_York
 permalink: /posts/:year-:month-:day-:title.html
+# Set the Announcements category ID after enabling GitHub Discussions and
+# installing the giscus app for chhallarepiyush27-crypto/website.
+giscus_category_id: ""
 exclude:
   - BLOG_PUBLISHING.md
