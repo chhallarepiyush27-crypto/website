@@ -50,11 +50,16 @@
   const notice = discussion.querySelector('.comment-status');
   const refresh = discussion.querySelector('[data-refresh-comments]');
   async function request(endpoint) {
-    const response = await fetch(endpoint, {headers:{Accept:'application/vnd.github+json'}});
-    if (!response.ok) throw new Error('Comments unavailable');
-    return response.json();
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    try {
+      const response = await fetch(endpoint, {signal:controller.signal, headers:{Accept:'application/vnd.github+json'}});
+      if (!response.ok) throw new Error('Comments unavailable');
+      return await response.json();
+    } finally { clearTimeout(timer); }
   }
   async function load() {
+    if (refresh.disabled) return;
     refresh.disabled = true; notice.textContent = 'Loading reader conversation…';
     try {
       const [issue, comments] = await Promise.all([request(base), request(base + '/comments?per_page=100')]);
