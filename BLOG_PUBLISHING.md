@@ -9,10 +9,16 @@ Write in Markdown: `## Heading`, `**bold**`, `[link](https://example.com)`, and 
 
 You can also send me your draft and photos, and I can publish them for you. The Friday schedule is editorial: nothing posts itself until you commit a note.
 
-## Comments, likes, and sharing on every post
+## Inline comments, likes, and sharing
 
-All posts use the shared `post` layout automatically. Every article and archive card has Comment, Like, and Share controls. Sharing offers app links, Copy link, and the device's native app chooser where available.
+Every article uses the shared post layout with an embedded Giscus panel. Readers compose comments and add reactions directly in the article; GitHub authentication is required once. Pathname mapping keeps each post's conversation separate. The Share menu stays within the article and supports app links, Copy link, and native sharing where available.
 
-The `post-conversations` workflow creates one public GitHub issue per published post when Markdown posts are added or updated on main. It reuses an existing thread whose body links to the exact article URL. The page finds that thread automatically; no comment ID or Giscus installation is needed. Readers sign in to GitHub to comment or add a heart/thumbs-up, and the page displays that article's comments and like count. The GitHub workflow token is used only inside Actions; no token is shipped to the website.
+### One-time activation
 
-If a post has a custom `permalink`, keep it as a literal absolute path beginning with `/`. When changing a published URL, move the existing thread's article link to the new URL to preserve comments.
+1. Enable Discussions in the website repository's Settings → General → Features.
+2. Install https://github.com/apps/giscus for **only** chhallarepiyush27-crypto/website. Review the requested Discussions permissions.
+3. On https://giscus.app select this repository and its Announcements category. Set pathname mapping, strict matching, reactions enabled, and input position top.
+4. Copy data-category-id into giscus_category_id in _config.yml. Keep the repository ID already configured in the template.
+5. Publish the inline-comments changes. Verify posting and reacting in the embedded panel before reporting activation complete.
+
+The old issue threads remain available for migration. Convert existing reader threads to Discussions and match their titles to the article pathname if comments need to be retained. No existing comments are deleted by this change. The legacy thread-creation workflow is disabled after activation.
