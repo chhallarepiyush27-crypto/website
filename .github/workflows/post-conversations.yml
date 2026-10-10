@@ -1,0 +1,52 @@
+name: Create per-post reader conversations
+on:
+  push:
+    branches: [main]
+    paths:
+      - '_posts/**'
+      - '.github/workflows/post-conversations.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: post-conversations
+  cancel-in-progress: false
+jobs:
+  conversations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure each published post has its own comment and like thread
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            const tree = await github.rest.git.getTree({owner, repo, tree_sha:context.sha, recursive:'true'});
+            const posts = tree.data.tree.filter(file => /^_posts\/\d{4}-\d{2}-\d{2}-.+\.(md|markdown|html)$/.test(file.path));
+            const issues = await github.paginate(github.rest.issues.listForRepo,{owner,repo,state:'all',per_page:100});
+            const scalar = value => {
+              value = value.trim();
+              if (value.startsWith('"')) { try { return JSON.parse(value); } catch (_) {} }
+              if (value.startsWith("'") && value.endsWith("'")) return value.slice(1,-1).replaceAll("''","'");
+              return value;
+            };
+            for (const file of posts) {
+              const blob = await github.rest.git.getBlob({owner,repo,file_sha:file.sha});
+              const text = Buffer.from(blob.data.content,'base64').toString('utf8');
+              const front = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+              if (!front || /^published:\s*false\s*$/m.test(front[1])) continue;
+              const stem = file.path.split('/').pop().replace(/\.(md|markdown|html)$/,'');
+              const custom = front[1].match(/^permalink:\s*(.+)$/m);
+              const path = custom ? scalar(custom[1]) : '/posts/' + stem + '.html';
+              if (!path.startsWith('/') || /[\s<>]/.test(path)) throw new Error('Unsupported post permalink: ' + path);
+              const url = 'https://chhallarepiyush27.com' + path;
+              const existing = issues.find(issue => !issue.pull_request && issue.body?.includes('(' + url + ')'));
+              if (existing) { core.info('Conversation already exists for ' + stem); continue; }
+              const match = front[1].match(/^title:\s*(.+)$/m);
+              const title = match ? scalar(match[1]) : stem.slice(11).replaceAll('-',' ');
+              const created = await github.rest.issues.create({owner,repo,
+                title:'Friday Notes: ' + title,
+                body:'Reader conversation for this Friday Note.\n\n[Read the article](' + url + ')\n\nLeave your thoughts below, or add a heart / thumbs-up reaction to like this post. Comments and like counts are shown on this article only.'});
+              issues.push(created.data);
+              core.info('Created conversation #' + created.data.number + ' for ' + stem);
+            }

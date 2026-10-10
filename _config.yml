@@ -5,3 +5,11 @@ permalink: /posts/:year-:month-:day-:title.html
 giscus_category_id: ""
 exclude:
   - BLOG_PUBLISHING.md
+
+# Every post inherits the same reader controls.
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post

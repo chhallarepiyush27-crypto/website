@@ -48,3 +48,21 @@
 .physics-post :focus-visible,.physics-blog :focus-visible{outline:3px solid #258c88;outline-offset:4px}
 @media(max-width:680px){.physics-post .blog-article-header{padding:120px 0 45px}.physics-post .blog-article-body{font-size:18px;padding-left:0;padding-right:0}.physics-post .blog-article-body p:first-child{font-size:23px}.physics-post .blog-article-body blockquote{font-size:20px}.post-actions{gap:8px}.post-actions a,.post-actions button{padding:10px 13px}.detector-art{height:85px}.reader-comment header{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.detector-art:after{animation:none}}
+
+/* A familiar share chooser for every individual post. */
+.post-share-dialog{border:1px solid #c2d9d6;border-radius:22px;width:min(460px,calc(100vw - 32px));max-height:85vh;overflow:auto;padding:28px;background:#f6faf8;color:#183746;box-shadow:0 24px 100px #0005}
+.post-share-dialog::backdrop{background:#071622b8;backdrop-filter:blur(4px)}
+.share-dialog-head{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.share-dialog-head h2{font:700 24px/1.2 'Manrope',sans-serif;letter-spacing:-.04em;margin:0}
+.share-dialog-head button{border:0;background:transparent;color:#284a55;font-size:28px;cursor:pointer;padding:4px 9px}
+.post-share-dialog p{font:14px/1.6 'DM Sans',sans-serif;color:#526972}
+.post-share-dialog .share-post-title{font-weight:700;color:#1a4250;margin-top:20px}
+.share-apps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
+.share-apps a,.share-apps button{font:600 13px/1.4 'DM Sans',sans-serif;text-align:center;padding:13px;border:1px solid #bcd3ce;border-radius:12px;color:#1b4953;background:white;text-decoration:none;cursor:pointer}
+.share-apps a:hover,.share-apps button:hover{background:#def2eb}
+.share-apps [hidden]{display:none}
+.post-share-dialog .share-status{color:#166e60;overflow-wrap:anywhere}
+.blog-card-actions{display:flex;gap:15px;flex-wrap:wrap;margin-top:22px;align-items:center}
+.blog-card-actions a,.blog-card-actions button{font:700 12px 'DM Sans',sans-serif;color:#18857b;background:none;border:0;padding:5px 0;text-decoration:none;cursor:pointer}
+.blog-post-card:first-child .blog-card-actions a,.blog-post-card:first-child .blog-card-actions button{color:#9de7da}
+.post-share-dialog :focus-visible{outline:3px solid #258c88;outline-offset:3px}

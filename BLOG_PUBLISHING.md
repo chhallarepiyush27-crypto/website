@@ -9,6 +9,10 @@ Write in Markdown: `## Heading`, `**bold**`, `[link](https://example.com)`, and 
 
 You can also send me your draft and photos, and I can publish them for you. The Friday schedule is editorial: nothing posts itself until you commit a note.
 
-## Enable comments and reactions
+## Comments, likes, and sharing on every post
 
-The post template has a Giscus discussion area. For it to become active, enable **Discussions** in this repository's **Settings → General → Features**, install the [Giscus GitHub App](https://github.com/apps/giscus) for this public repository, and choose the **Announcements** category on [giscus.app](https://giscus.app/). Copy the generated `data-category-id` into `giscus_category_id` in `_config.yml` and commit. Visitors then use GitHub sign in to comment or react on each post. Leave the value blank until setup is complete; no broken discussion box is displayed.
+All posts use the shared `post` layout automatically. Every article and archive card has Comment, Like, and Share controls. Sharing offers app links, Copy link, and the device's native app chooser where available.
+
+The `post-conversations` workflow creates one public GitHub issue per published post when Markdown posts are added or updated on main. It reuses an existing thread whose body links to the exact article URL. The page finds that thread automatically; no comment ID or Giscus installation is needed. Readers sign in to GitHub to comment or add a heart/thumbs-up, and the page displays that article's comments and like count. The GitHub workflow token is used only inside Actions; no token is shipped to the website.
+
+If a post has a custom `permalink`, keep it as a literal absolute path beginning with `/`. When changing a published URL, move the existing thread's article link to the new URL to preserve comments.

@@ -15,6 +15,7 @@ layout: null
   <link rel="stylesheet" href="assets/css/portfolio.css">
   <script src="assets/js/portfolio.js" defer></script>
 <link rel="stylesheet" href="assets/css/physics-blog.css">
+<script src="assets/js/physics-blog.js" defer></script>
 </head>
 <body class="physics-blog">
 <header class="site-header scrolled" id="site-header"><nav class="nav wrap" aria-label="Main navigation"><a class="brand" href="index.html">Piyush Chhallare<span>.</span></a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button><div class="nav-links" id="nav-links"><a href="index.html">Home</a><a href="researchexperience.html">Research</a><a href="myprojects.html">Projects</a><a href="aboutme.html">About</a><a href="blog.html" aria-current="page">Blog</a><a href="certificates.html">Certifications</a><a class="nav-cta" href="contactme.html">Get in touch ↗</a></div></nav></header>
@@ -37,7 +38,7 @@ layout: null
     {% if site.posts.size > 0 %}
     <div class="blog-post-grid">
       {% for post in site.posts %}
-      <article class="blog-post-card"><span class="blog-post-meta">{{ post.category | escape }} · <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%B %-d, %Y' }}</time></span><h3>{{ post.title | escape }}</h3><p>{{ post.excerpt | strip_html | escape }}</p><a href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">Read the note ↗</a></article>
+      <article class="blog-post-card"><span class="blog-post-meta">{{ post.category | escape }} · <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%B %-d, %Y' }}</time></span><h3>{{ post.title | escape }}</h3><p>{{ post.excerpt | strip_html | escape }}</p><a href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">Read the note ↗</a><div class="blog-card-actions" aria-label="Interact with {{ post.title | escape }}"><a href="{{ post.url | relative_url }}#comments">Comment</a><a href="{{ post.url | relative_url }}#comments">♡ Like</a><button type="button" data-share data-post-url="{{ post.url | relative_url }}" data-post-title="{{ post.title | escape }}">Share ↗</button></div></article>
       {% endfor %}
     </div>
     {% else %}
@@ -53,5 +54,10 @@ layout: null
   <section class="blog-end"><div class="wrap"><span class="kicker">Keep the conversation going</span><h2>Good questions are better shared.</h2><p>If something here sparks a thought, I’d love to hear from you.</p><a class="btn btn-primary" href="contactme.html">Get in touch ↗</a></div></section>
 </main>
 <footer class="page-footer"><div class="wrap"><span>© <span id="year">2026</span> Piyush Chhallare · Physics · Devices · Circuits</span><span><a href="https://github.com/chhallarepiyush27-crypto" target="_blank" rel="noopener noreferrer">GitHub ↗</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/piyush-chhallare-b49920227/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></span></div></footer>
+<dialog id="post-share-dialog" class="post-share-dialog" aria-labelledby="share-title">
+<div class="share-dialog-head"><h2 id="share-title">Share this post</h2><button type="button" data-close-share aria-label="Close share options">×</button></div>
+<p class="share-post-title"></p><p>Send it to an app, share with a friend, or copy the link anywhere.</p>
+<div class="share-apps"><button type="button" data-native-share>More apps…</button><a data-share-service="whatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</a><a data-share-service="telegram" target="_blank" rel="noopener noreferrer">Telegram</a><a data-share-service="linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a><a data-share-service="facebook" target="_blank" rel="noopener noreferrer">Facebook</a><a data-share-service="x" target="_blank" rel="noopener noreferrer">X</a><a data-share-service="reddit" target="_blank" rel="noopener noreferrer">Reddit</a><a data-share-service="email">Email</a><button type="button" data-copy-link>Copy link</button></div>
+<p class="share-status" role="status" aria-live="polite"></p></dialog>
 </body>
 </html>

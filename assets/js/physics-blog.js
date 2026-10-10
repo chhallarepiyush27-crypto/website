@@ -12,40 +12,58 @@
   addEventListener('scroll', progress, {passive:true});
   addEventListener('resize', progress);
   progress();
-  const share = document.querySelector('[data-share]');
-  const copy = document.querySelector('[data-copy-link]');
-  const status = document.querySelector('.share-status');
-  const url = document.querySelector('link[rel=canonical]')?.href || location.href.split('#')[0];
-  const title = document.querySelector('h1')?.textContent || document.title;
-  if (share) {
-    if (!navigator.share) share.hidden = true;
-    share.addEventListener('click', async () => {
-      try { await navigator.share({title, url}); }
-      catch (error) { if (error.name !== 'AbortError') status.textContent = 'Use Copy link or one of the share links below.'; }
-    });
+
+  const dialog = document.querySelector('#post-share-dialog');
+  const canonical = document.querySelector('link[rel=canonical]')?.href || location.href.split('#')[0];
+  let shared = {url:canonical, title:document.querySelector('h1')?.textContent || document.title};
+  const status = () => dialog?.open ? dialog.querySelector('.share-status') : document.querySelector('.share-status');
+  function shareLinks() {
+    const u = encodeURIComponent(shared.url), t = encodeURIComponent(shared.title);
+    const links = {
+      linkedin:'https://www.linkedin.com/sharing/share-offsite/?url=' + u,
+      whatsapp:'https://wa.me/?text=' + t + '%20' + u,
+      telegram:'https://t.me/share/url?url=' + u + '&text=' + t,
+      facebook:'https://www.facebook.com/sharer/sharer.php?u=' + u,
+      x:'https://twitter.com/intent/tweet?url=' + u + '&text=' + t,
+      reddit:'https://www.reddit.com/submit?url=' + u + '&title=' + t,
+      email:'mailto:?subject=' + t + '&body=' + u
+    };
+    dialog.querySelectorAll('[data-share-service]').forEach(link => link.href = links[link.dataset.shareService]);
+    dialog.querySelector('.share-post-title').textContent = shared.title;
+    dialog.querySelector('.share-status').textContent = '';
+    dialog.querySelector('[data-native-share]').hidden = !navigator.share;
   }
-  if (copy) copy.addEventListener('click', async () => {
+  function openOptions() { if (dialog) { shareLinks(); dialog.showModal(); } }
+  async function nativeShare() {
+    if (!navigator.share) { openOptions(); return; }
+    try { await navigator.share(shared); }
+    catch (error) { if (error.name !== 'AbortError') openOptions(); }
+  }
+  document.querySelectorAll('[data-share]').forEach(button => button.addEventListener('click', () => {
+    shared = {url:button.dataset.postUrl ? new URL(button.dataset.postUrl, location.origin).href : canonical,
+      title:button.dataset.postTitle || document.querySelector('h1')?.textContent || document.title};
+    // The chooser always offers both app links and the device's full native sheet.
+    openOptions();
+  }));
+  dialog?.querySelector('[data-native-share]').addEventListener('click', nativeShare);
+  dialog?.querySelector('[data-close-share]').addEventListener('click', () => dialog.close());
+  document.querySelectorAll('[data-copy-link]').forEach(copy => copy.addEventListener('click', async () => {
     try {
-      if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(url);
+      if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(shared.url);
       else {
-        const field = document.createElement('textarea'); field.value = url;
+        const field = document.createElement('textarea'); field.value = shared.url;
         field.style.position = 'fixed'; field.style.opacity = '0'; document.body.append(field);
         field.select(); const ok = document.execCommand('copy'); field.remove();
         if (!ok) throw new Error('Copy unavailable');
       }
-      status.textContent = 'Link copied.';
-    } catch (_) { status.textContent = 'Copy this link: ' + url; }
-  });
-  document.querySelectorAll('[data-share-service]').forEach(link => {
-    const service = link.dataset.shareService;
-    const u = encodeURIComponent(url), t = encodeURIComponent(title);
-    link.href = service === 'linkedin' ? 'https://www.linkedin.com/sharing/share-offsite/?url=' + u
-      : service === 'whatsapp' ? 'https://wa.me/?text=' + t + '%20' + u
-      : 'mailto:?subject=' + t + '&body=' + u;
-  });
+      status().textContent = 'Link copied. Paste it into any app.';
+    } catch (_) { status().textContent = 'Copy this link: ' + shared.url; }
+  }));
   const discussion = document.querySelector('[data-reader-thread]');
   if (!discussion) return;
-  const base = 'https://api.github.com/repos/chhallarepiyush27-crypto/website/issues/' + discussion.dataset.readerThread;
+  let thread = discussion.dataset.readerThread;
+  const postUrl = discussion.dataset.postUrl || canonical;
+  const repositoryAPI = 'https://api.github.com/repos/chhallarepiyush27-crypto/website';
   const list = discussion.querySelector('.reader-comments');
   const notice = discussion.querySelector('.comment-status');
   const refresh = discussion.querySelector('[data-refresh-comments]');
@@ -62,6 +80,18 @@
     if (refresh.disabled) return;
     refresh.disabled = true; notice.textContent = 'Loading reader conversation…';
     try {
+      if (!thread) {
+        const q = 'repo:chhallarepiyush27-crypto/website is:issue in:body "' + postUrl + '"';
+        const result = await request('https://api.github.com/search/issues?q=' + encodeURIComponent(q));
+        const match = result.items.find(issue => !issue.pull_request && issue.body?.includes('(' + postUrl + ')'));
+        if (!match) { notice.textContent = 'This post’s conversation is being prepared. Refresh in a moment.'; return; }
+        thread = match.number;
+      }
+      const base = repositoryAPI + '/issues/' + thread;
+      const threadUrl = 'https://github.com/chhallarepiyush27-crypto/website/issues/' + thread;
+      discussion.querySelector('[data-comment-link]').href = threadUrl + '#new_comment_field';
+      discussion.querySelector('[data-reaction-count]').href = threadUrl;
+      discussion.querySelector('[data-thread-link]').href = threadUrl;
       const [issue, comments] = await Promise.all([request(base), request(base + '/comments?per_page=100')]);
       const likes = (issue.reactions?.['+1'] || 0) + (issue.reactions?.heart || 0);
       discussion.querySelector('[data-reaction-count]').textContent = '♡ Like / react · ' + likes;
