@@ -1,0 +1,50 @@
+
+/* Physics journal: a night sky above a quiet reading room. */
+.physics-blog .blog-hero,.physics-post .blog-article-header{background:radial-gradient(ellipse at 85% 20%,#135368 0,transparent 44%),radial-gradient(ellipse at 12% 60%,#222e55 0,transparent 50%),#091522;position:relative;overflow:hidden}
+.physics-blog .blog-hero:before,.physics-post .blog-article-header:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:radial-gradient(circle,#cff8ff 1px,transparent 1.5px),radial-gradient(circle,#88c4dc 1px,transparent 1.5px);background-size:89px 113px,157px 79px;background-position:21px 16px,61px 44px}
+.physics-blog .blog-hero-grid,.physics-post .blog-article-header .wrap{position:relative;z-index:1}
+.physics-blog .blog-hero-art{background:linear-gradient(160deg,#164254,#10283e 50%,#091522);box-shadow:inset 0 0 80px #75d9f91c;border-color:#6daac15c}
+.physics-blog .blog-art-number{font-size:100px;letter-spacing:-.08em;color:#b5f2ec}
+.physics-blog .blog-art-caption{color:#b9e1ec}
+.physics-blog .blog-art-note{background:#d9f1ef}
+.physics-topics{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px;position:relative;z-index:1}
+.physics-topics span{font:600 11px/1.3 'DM Sans',sans-serif;letter-spacing:.04em;padding:9px 12px;border:1px solid #96cbda45;border-radius:30px;color:#cbe8ef;background:#15374670}
+.physics-blog .blog-post-card:first-child{background:linear-gradient(120deg,#112a3d,#1b4855);color:#ecf9fa;border-color:#5397a3}
+.physics-blog .blog-post-card:first-child h3{color:#f2fafb}
+.physics-blog .blog-post-card:first-child p{color:#c4dce3}
+.physics-blog .blog-post-card:first-child a,.physics-blog .blog-post-card:first-child .blog-post-meta{color:#9de7da}
+.physics-blog .blog-intro{background:#f6f9f7}
+.physics-post{background:#f7f9f7}
+.physics-post .blog-article-header{padding:145px 0 75px}
+.physics-post .blog-article-header h1{font-size:clamp(2.7rem,5.7vw,5.7rem);max-width:900px;line-height:1.07;letter-spacing:-.065em;color:#f2fafb}
+.physics-post .blog-article-header p{max-width:650px;color:#c4dde6;line-height:1.7}
+.physics-post .blog-article-header .eyebrow{color:#8edecf}
+.physics-post .blog-article-body{font:400 20px/1.85 Georgia,serif;color:#344b57;max-width:740px}
+.physics-post .blog-article-body p:first-child{font-size:26px;color:#173240}
+.physics-post .blog-article-body h2{font-family:'Manrope',sans-serif}
+.physics-post .blog-article-body blockquote{background:#e8f1ee;border:0;border-left:3px solid #239d99;padding:25px 28px;border-radius:0 14px 14px 0;font-size:23px;color:#1a4c52}
+.physics-post .blog-article-body blockquote p{margin:0;font-size:inherit}
+.post-byline{display:flex;flex-wrap:wrap;gap:12px;color:#abc8d3;font-size:13px;margin-top:24px}
+.post-byline strong{color:#e4f7f6}
+.detector-art{height:115px;position:relative;border-top:1px solid #8ebed636;margin-top:40px;overflow:hidden;max-width:900px;background:repeating-linear-gradient(90deg,transparent 0 69px,#9bdff42b 70px 71px,transparent 72px 140px)}
+.detector-art:before{content:"";position:absolute;inset:10px 0;background:radial-gradient(circle,#98d6e6 2px,transparent 3px);background-size:70px 28px;opacity:.7}
+.detector-art:after{content:"";position:absolute;left:15%;top:48%;width:70%;height:2px;background:linear-gradient(90deg,transparent,#a2ffff,#fff,transparent);transform:rotate(-7deg);box-shadow:0 0 15px #91ecff;animation:particlePulse 5s ease-in-out infinite}
+.detector-art span{position:absolute;right:10px;bottom:5px;z-index:1;color:#a8c7d2;font:10px 'DM Sans',sans-serif;letter-spacing:.13em;background:#102535;padding:5px 9px}
+@keyframes particlePulse{50%{opacity:.35}}
+.post-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;align-items:center}
+.post-actions a,.post-actions button,.discussion-actions a,.discussion-actions button{font:600 12px/1.4 'DM Sans',sans-serif;border:1px solid #90b9c65c;border-radius:100px;padding:11px 17px;color:#e5f5f6;background:#ffffff0a;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-height:42px}
+.post-actions a:hover,.post-actions button:hover{background:#9de7da;color:#112b37}
+.share-status{font-size:12px;color:#a5e9d9;min-height:18px}
+.read-progress{position:fixed;z-index:150;top:0;left:0;height:3px;width:0;background:#7ee6d0;pointer-events:none}
+.physics-post .blog-discussion{background:#eaf1ee}
+.discussion-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.discussion-actions a,.discussion-actions button{color:#19414d;background:#fff;border:1px solid #b7cfc9}
+.discussion-actions a:first-child{background:#164452;color:#fff;border-color:#164452}
+.physics-post .comment-status{margin:12px 0 20px;font:14px/1.6 'DM Sans',sans-serif;color:#48636a}
+.reader-comment{padding:23px;background:#fff;border:1px solid #d6e2de;border-radius:14px;margin:15px 0}
+.reader-comment header{display:flex;justify-content:space-between;gap:12px;font:600 12px 'DM Sans',sans-serif;color:#526971}
+.reader-comment p{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.7 'DM Sans',sans-serif;margin:18px 0 0;color:#284551}
+.physics-post .discussion-note{font-size:13px;line-height:1.7}
+.physics-post :focus-visible,.physics-blog :focus-visible{outline:3px solid #258c88;outline-offset:4px}
+@media(max-width:680px){.physics-post .blog-article-header{padding:120px 0 45px}.physics-post .blog-article-body{font-size:18px;padding-left:0;padding-right:0}.physics-post .blog-article-body p:first-child{font-size:23px}.physics-post .blog-article-body blockquote{font-size:20px}.post-actions{gap:8px}.post-actions a,.post-actions button{padding:10px 13px}.detector-art{height:85px}.reader-comment header{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.detector-art:after{animation:none}}
