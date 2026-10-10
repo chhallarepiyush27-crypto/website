@@ -59,58 +59,17 @@
       status().textContent = 'Link copied. Paste it into any app.';
     } catch (_) { status().textContent = 'Copy this link: ' + shared.url; }
   }));
-  const discussion = document.querySelector('[data-reader-thread]');
-  if (!discussion) return;
-  let thread = discussion.dataset.readerThread;
-  const postUrl = discussion.dataset.postUrl || canonical;
-  const repositoryAPI = 'https://api.github.com/repos/chhallarepiyush27-crypto/website';
-  const list = discussion.querySelector('.reader-comments');
-  const notice = discussion.querySelector('.comment-status');
-  const refresh = discussion.querySelector('[data-refresh-comments]');
-  async function request(endpoint) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
-    try {
-      const response = await fetch(endpoint, {signal:controller.signal, headers:{Accept:'application/vnd.github+json'}});
-      if (!response.ok) throw new Error('Comments unavailable');
-      return await response.json();
-    } finally { clearTimeout(timer); }
-  }
-  async function load() {
-    if (refresh.disabled) return;
-    refresh.disabled = true; notice.textContent = 'Loading reader conversation…';
-    try {
-      if (!thread) {
-        const q = 'repo:chhallarepiyush27-crypto/website is:issue in:body "' + postUrl + '"';
-        const result = await request('https://api.github.com/search/issues?q=' + encodeURIComponent(q));
-        const match = result.items.find(issue => !issue.pull_request && issue.body?.includes('(' + postUrl + ')'));
-        if (!match) { notice.textContent = 'This post’s conversation is being prepared. Refresh in a moment.'; return; }
-        thread = match.number;
-      }
-      const base = repositoryAPI + '/issues/' + thread;
-      const threadUrl = 'https://github.com/chhallarepiyush27-crypto/website/issues/' + thread;
-      discussion.querySelector('[data-comment-link]').href = threadUrl + '#new_comment_field';
-      discussion.querySelector('[data-reaction-count]').href = threadUrl;
-      discussion.querySelector('[data-thread-link]').href = threadUrl;
-      const [issue, comments] = await Promise.all([request(base), request(base + '/comments?per_page=100')]);
-      const likes = (issue.reactions?.['+1'] || 0) + (issue.reactions?.heart || 0);
-      discussion.querySelector('[data-reaction-count]').textContent = '♡ Like / react · ' + likes;
-      list.replaceChildren();
-      comments.forEach(comment => {
-        const card = document.createElement('article'); card.className = 'reader-comment';
-        const header = document.createElement('header');
-        const author = document.createElement('a'); author.textContent = '@' + comment.user.login;
-        author.href = comment.html_url; author.target = '_blank'; author.rel = 'noopener noreferrer';
-        const time = document.createElement('time'); time.dateTime = comment.created_at;
-        time.textContent = new Date(comment.created_at).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
-        const body = document.createElement('p'); body.textContent = comment.body || '';
-        header.append(author,time); card.append(header,body); list.append(card);
-      });
-      notice.textContent = issue.comments ? issue.comments + ' reader comment' + (issue.comments === 1 ? '' : 's') + (issue.comments > comments.length ? ' · Latest comments are available on GitHub.' : '') : 'No comments yet. Be the first to share a thought.';
-    } catch (_) { notice.textContent = 'The conversation is available on GitHub. Open the thread below to read, comment, or react.'; }
-    finally { refresh.disabled = false; }
-  }
-  refresh.addEventListener('click',load);
-  addEventListener('focus', load);
-  load();
+
+  // Giscus hosts the authenticated composer and shared reactions in this post.
+  // Only accept public discussion metadata from the expected embedded origin.
+  addEventListener('message', event => {
+    if (event.origin !== 'https://giscus.app') return;
+    const frame = document.querySelector('iframe.giscus-frame');
+    if (!frame || event.source !== frame.contentWindow) return;
+    const metadata = event.data?.giscus?.discussion;
+    if (!metadata) return;
+    const count = metadata.totalReactionCount;
+    const control = document.querySelector('[data-like-post]');
+    if (control && Number.isInteger(count) && count >= 0) control.textContent = '♡ Like · ' + count;
+  });
 })();
