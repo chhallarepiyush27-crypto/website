@@ -1,8 +1,8 @@
 timezone: America/New_York
 permalink: /posts/:year-:month-:day-:title.html
 # Public browser configuration; never use a secret or service-role key.
-supabase_url: ""
-supabase_publishable_key: ""
+supabase_url: "https://cblowgxokedvquxfmuhc.supabase.co"
+supabase_publishable_key: "sb_publishable_ipoFhB9DPNj2xORk1cPwMQ_wWEEsWe8"
 exclude:
   - BLOG_PUBLISHING.md
   - supabase
