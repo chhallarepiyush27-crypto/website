@@ -88,26 +88,21 @@
         thread = match.number;
       }
       const base = repositoryAPI + '/issues/' + thread;
-      const threadUrl = 'https://github.com/chhallarepiyush27-crypto/website/issues/' + thread;
-      discussion.querySelector('[data-comment-link]').href = threadUrl + '#new_comment_field';
-      discussion.querySelector('[data-reaction-count]').href = threadUrl;
-      discussion.querySelector('[data-thread-link]').href = threadUrl;
       const [issue, comments] = await Promise.all([request(base), request(base + '/comments?per_page=100')]);
       const likes = (issue.reactions?.['+1'] || 0) + (issue.reactions?.heart || 0);
-      discussion.querySelector('[data-reaction-count]').textContent = '♡ Like / react · ' + likes;
+      discussion.querySelector('[data-reaction-count]').textContent = '♡ Likes · ' + likes;
       list.replaceChildren();
       comments.forEach(comment => {
         const card = document.createElement('article'); card.className = 'reader-comment';
         const header = document.createElement('header');
-        const author = document.createElement('a'); author.textContent = '@' + comment.user.login;
-        author.href = comment.html_url; author.target = '_blank'; author.rel = 'noopener noreferrer';
+        const author = document.createElement('span'); author.textContent = '@' + comment.user.login;
         const time = document.createElement('time'); time.dateTime = comment.created_at;
         time.textContent = new Date(comment.created_at).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
         const body = document.createElement('p'); body.textContent = comment.body || '';
         header.append(author,time); card.append(header,body); list.append(card);
       });
-      notice.textContent = issue.comments ? issue.comments + ' reader comment' + (issue.comments === 1 ? '' : 's') + (issue.comments > comments.length ? ' · Latest comments are available on GitHub.' : '') : 'No comments yet. Be the first to share a thought.';
-    } catch (_) { notice.textContent = 'The conversation is available on GitHub. Open the thread below to read, comment, or react.'; }
+      notice.textContent = issue.comments ? issue.comments + ' reader comment' + (issue.comments === 1 ? '' : 's') + (issue.comments > comments.length ? ' · Showing the first 100 comments.' : '') : 'No comments yet.';
+    } catch (_) { notice.textContent = 'Comments could not load. Please try Refresh comments in a moment.'; }
     finally { refresh.disabled = false; }
   }
   refresh.addEventListener('click',load);
