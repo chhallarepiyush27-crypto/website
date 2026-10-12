@@ -14,8 +14,9 @@ layout: null
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/portfolio.css">
   <script src="assets/js/portfolio.js" defer></script>
-<link rel="stylesheet" href="assets/css/physics-blog.css?v=stay-on-post-20261012">
+<link rel="stylesheet" href="assets/css/physics-blog.css?v=inline-cards-20261012">
 <script src="assets/js/physics-blog.js?v=stay-on-post-20261012" defer></script>
+<script src="assets/js/reader-conversations.js?v=inline-cards-20261012" defer></script>
 </head>
 <body class="physics-blog">
 <header class="site-header scrolled" id="site-header"><nav class="nav wrap" aria-label="Main navigation"><a class="brand" href="index.html">Piyush Chhallare<span>.</span></a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button><div class="nav-links" id="nav-links"><a href="index.html">Home</a><a href="researchexperience.html">Research</a><a href="myprojects.html">Projects</a><a href="aboutme.html">About</a><a href="blog.html" aria-current="page">Blog</a><a href="certificates.html">Certifications</a><a class="nav-cta" href="contactme.html">Get in touch ↗</a></div></nav></header>
@@ -38,7 +39,16 @@ layout: null
     {% if site.posts.size > 0 %}
     <div class="blog-post-grid">
       {% for post in site.posts %}
-      <article class="blog-post-card"><span class="blog-post-meta">{{ post.category | escape }} · <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%B %-d, %Y' }}</time></span><h3>{{ post.title | escape }}</h3><p>{{ post.excerpt | strip_html | escape }}</p><a href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">Read the note ↗</a><div class="blog-card-actions" aria-label="Interact with {{ post.title | escape }}"><a href="{{ post.url | relative_url }}#comments">Comment</a><a href="{{ post.url | relative_url }}#comments">♡ Like</a><button type="button" data-share data-post-url="{{ post.url | relative_url }}" data-post-title="{{ post.title | escape }}">Share ↗</button></div></article>
+      <article class="blog-post-card" data-reader-card><span class="blog-post-meta">{{ post.category | escape }} · <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%B %-d, %Y' }}</time></span><h3>{{ post.title | escape }}</h3><p>{{ post.excerpt | strip_html | escape }}</p><a href="{{ post.url | relative_url }}" aria-label="Read {{ post.title | escape }}">Read the note ↗</a><div class="reader-social" data-reader-conversation data-post-path="{{ post.url | escape }}" data-supabase-url="{{ site.supabase_url | escape }}" data-supabase-key="{{ site.supabase_publishable_key | escape }}">
+<div class="reader-summary"><span>♡ <span data-like-total>0</span> likes</span><button type="button" data-toggle-comments aria-expanded="false" aria-controls="card-comments-{{ forloop.index }}"><span data-comment-total>0</span> comments</button></div>
+<div class="reader-social-actions" aria-label="Post actions"><button type="button" data-like-post aria-pressed="false" disabled><span data-like-label>♡ Like</span></button><button type="button" data-toggle-comments aria-expanded="false" aria-controls="card-comments-{{ forloop.index }}"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 11.5a8 8 0 0 1-8 8H5l-3 2v-7a8 8 0 0 1 8-8h2a8 8 0 0 1 8 5Z"/><path d="M7 11h10M7 15h6"/></svg> Comment</button><button type="button" data-share data-post-url="{{ post.url | relative_url }}" data-post-title="{{ post.title | escape }}"><span aria-hidden="true">↗</span> Share</button></div>
+<div id="card-comments-{{ forloop.index }}" data-comment-panel class="reader-comment-panel" hidden>
+<form class="reader-comment-form" aria-label="Leave a comment">
+<label for="card-comments-{{ forloop.index }}-name">Your name</label><input id="card-comments-{{ forloop.index }}-name" name="author" autocomplete="nickname" maxlength="60" placeholder="Name" required disabled>
+<label for="card-comments-{{ forloop.index }}-text">Add a comment</label><textarea id="card-comments-{{ forloop.index }}-text" name="comment" rows="2" maxlength="2000" placeholder="Add a comment…" required disabled></textarea>
+<div class="reader-form-footer"><small>Your comment is public. No account needed.</small><button type="submit" disabled>Post comment</button></div></form>
+<div data-comments-list class="reader-comments" aria-label="Reader comments"></div><button type="button" data-more-comments hidden>Load older comments</button></div>
+<div class="reader-social-status"><p data-conversation-status role="status" aria-live="polite">Loading conversation…</p><button type="button" data-refresh-conversation aria-label="Refresh this post's comments">↻</button></div></div></article>
       {% endfor %}
     </div>
     {% else %}

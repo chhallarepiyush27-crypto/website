@@ -2,8 +2,8 @@ import {JSDOM} from 'jsdom';
 import {readFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const dom = new JSDOM(`<link rel="canonical" href="https://chhallarepiyush27.com/posts/example.html">
-<button data-like-post disabled><span data-like-label>♡ Like</span><span data-like-total>0</span></button>
-<section data-reader-conversation data-supabase-url="https://example.supabase.co" data-supabase-key="sb_publishable_test">
+<div class="post-actions"><button data-like-post disabled><span data-like-label>♡ Like</span><span data-like-total>0</span></button></div>
+<section data-reader-context="article" data-reader-conversation data-supabase-url="https://example.supabase.co" data-supabase-key="sb_publishable_test">
 <form><input name="author" required><textarea name="comment" required></textarea><button type="submit" disabled>Post comment</button></form>
 <div data-conversation-status></div><div data-comments-list></div><button data-refresh-conversation>Refresh</button><button data-more-comments hidden>Older</button><span data-comment-total></span></section>`,
 {url:'https://chhallarepiyush27.com/posts/example.html',runScripts:'outside-only'});

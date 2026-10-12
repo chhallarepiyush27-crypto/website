@@ -1,20 +1,23 @@
 // Only the public Supabase publishable (or legacy anon) key belongs in HTML.
 (() => {
   'use strict';
-  const region = document.querySelector('[data-reader-conversation]');
-  if (!region) return;
+  const clients = new Map(), sessions = new Map();
+  document.querySelectorAll('[data-reader-conversation]').forEach(init);
+  function init(region) {
   const form = region.querySelector('form');
   const notice = region.querySelector('[data-conversation-status]');
   const list = region.querySelector('[data-comments-list]');
-  const likeButtons = [...document.querySelectorAll('[data-like-post]')];
+  const scope = region.closest('[data-reader-card]') || region;
+  const extra = region.dataset.readerContext === 'article' ? [...document.querySelectorAll('.post-actions [data-like-post]')] : [];
+  const likeButtons = [...scope.querySelectorAll('[data-like-post]'), ...extra];
   const refresh = region.querySelector('[data-refresh-conversation]');
   const more = region.querySelector('[data-more-comments]');
   const submit = form?.querySelector('button[type="submit"]');
-  const path = new URL(document.querySelector('link[rel="canonical"]').href).pathname;
+  const path = region.dataset.postPath || new URL(document.querySelector('link[rel="canonical"]').href).pathname;
   const url = region.dataset.supabaseUrl;
   const key = region.dataset.supabaseKey;
   if (!url || !key) return;
-  let clientPromise, sessionPromise, nextCursor = null, liked = false, busyLike = false;
+  let nextCursor = null, liked = false, busyLike = false;
   let pendingComment = null, publishing = false, loading = false;
   const seen = new Set();
   const message = text => { notice.textContent = text; };
@@ -26,7 +29,7 @@
     } catch (_) { return false; }
   }
   async function connect() {
-    if (!clientPromise) clientPromise = (async () => {
+    if (!clients.has(url)) clients.set(url, (async () => {
       if (!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(url) || !publicKey(key)) {
         throw new Error('Reader conversations are not configured yet.');
       }
@@ -43,11 +46,11 @@
           finally { clearTimeout(timer); init.signal?.removeEventListener('abort', abort); }
         }}
       });
-    })().catch(error => { clientPromise = null; throw error; });
-    return clientPromise;
+    })().catch(error => { clients.delete(url); throw error; }));
+    return clients.get(url);
   }
   async function guest() {
-    if (!sessionPromise) sessionPromise = (async () => {
+    if (!sessions.has(url)) sessions.set(url, (async () => {
       const client = await connect();
       const {data, error} = await client.auth.getSession();
       if (error) throw error;
@@ -56,8 +59,8 @@
         if (result.error) throw result.error;
       }
       return client;
-    })().finally(() => { sessionPromise = null; });
-    return sessionPromise;
+    })().finally(() => { sessions.delete(url); }));
+    return sessions.get(url);
   }
   async function rpc(name, params, write = false) {
     const client = await (write ? guest() : connect());
@@ -67,8 +70,8 @@
   }
   function totals(data) {
     liked = data.liked === true;
-    document.querySelectorAll('[data-like-total]').forEach(el => { el.textContent = data.like_count; });
-    document.querySelectorAll('[data-comment-total]').forEach(el => { el.textContent = data.comment_count; });
+    [...scope.querySelectorAll('[data-like-total]'), ...extra.flatMap(button => [...button.querySelectorAll('[data-like-total]')])].forEach(el => { el.textContent = data.like_count; });
+    scope.querySelectorAll('[data-comment-total]').forEach(el => { el.textContent = data.comment_count; });
     likeButtons.forEach(button => {
       button.setAttribute('aria-pressed', String(liked));
       button.querySelector('[data-like-label]').textContent = liked ? '♥ Liked' : '♡ Like';
@@ -136,5 +139,22 @@
   });
   refresh.addEventListener('click', () => load());
   more.addEventListener('click', () => load(true));
+  const panel = region.querySelector('[data-comment-panel]');
+  const toggles = region.querySelectorAll('[data-toggle-comments]');
+  toggles.forEach(button => button.addEventListener('click', () => {
+    const open = panel.hidden;
+    panel.hidden = !open;
+    toggles.forEach(toggle => toggle.setAttribute('aria-expanded', String(open)));
+    if (open) form.elements.comment.focus();
+  }));
+  if (region.dataset.readerContext === 'article') {
+    const openPanel = () => {
+      panel.hidden = false;
+      toggles.forEach(toggle => toggle.setAttribute('aria-expanded', 'true'));
+    };
+    document.querySelector('.post-actions a[href="#comments"]')?.addEventListener('click', openPanel);
+    if (location.hash === '#comments') openPanel();
+  }
   load();
+  }
 })();

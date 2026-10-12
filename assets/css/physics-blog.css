@@ -81,3 +81,27 @@
 .reader-comment-form button:disabled, [data-like-post]:disabled { opacity: .55; cursor: not-allowed; }
 .reader-comment p { white-space: pre-wrap; overflow-wrap: anywhere; }
 @media (max-width: 580px) { .reader-form-footer { flex-direction: column; align-items: stretch; } .discussion-actions { flex-wrap: wrap; } }
+
+/* Social actions and conversations belong to the post card itself. */
+.reader-social{position:relative;z-index:1;background:#fff;color:#29414b;border:1px solid #d7e4e0;border-radius:16px;margin-top:26px;padding:16px 20px;font:14px/1.5 'DM Sans',sans-serif}
+.reader-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#667a80;font-size:12px;padding-bottom:10px}
+.reader-summary button{border:0;background:none;font:inherit;color:inherit;cursor:pointer;padding:0}
+.reader-social-actions{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #e1e9e6;border-bottom:1px solid #e1e9e6;padding:5px 0;gap:6px}
+.reader-social-actions button{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 5px;border:0;border-radius:8px;background:transparent;color:#344c56;font:600 14px/1.4 'DM Sans',sans-serif;cursor:pointer;min-height:44px}
+.reader-social-actions button:hover{background:#edf5f1}
+.reader-social-actions button[aria-pressed="true"]{background:#dff4ea;color:#106858}
+.reader-social-actions button:disabled{opacity:.5;cursor:wait}
+.reader-social-status{display:flex;justify-content:space-between;align-items:center;gap:14px;padding-top:10px}
+.reader-social-status [data-conversation-status],.physics-blog .blog-post-card .reader-social-status p,.physics-post .blog-article-body .reader-social-status p{color:#627a80;font:12px/1.5 'DM Sans',sans-serif;margin:0}
+.reader-social-status [data-refresh-conversation]{border:0;background:none;font-size:20px;color:#53766e;cursor:pointer;padding:0 4px}
+.reader-social [hidden]{display:none!important}
+.reader-social .reader-comment-form{margin:16px 0 10px;gap:7px;font:14px/1.5 'DM Sans',sans-serif}
+.reader-social .reader-comment-form label{font-size:12px}
+.reader-social .reader-comment-form input,.reader-social .reader-comment-form textarea{padding:10px 13px;border-radius:12px;font:14px/1.5 'DM Sans',sans-serif}
+.reader-social .reader-comment-form textarea{min-height:70px}
+.reader-social .reader-form-footer small{font-size:11px;line-height:1.5}
+.reader-social .reader-comment-form button{padding:10px 16px;font:600 12px 'DM Sans',sans-serif}
+.physics-blog .blog-post-card .reader-social .reader-comment p,.physics-post .blog-article-body .reader-social .reader-comment p{font:14px/1.6 'DM Sans',sans-serif;color:#284551;margin-top:10px}
+.reader-social .reader-comment{padding:14px;margin:12px 0;border-radius:12px;background:#f2f6f4}
+.reader-article-social{margin:36px 0 24px;scroll-margin-top:100px}
+@media(max-width:580px){.reader-social{padding:12px;margin-top:20px}.reader-social-actions button{font-size:12px;gap:5px}.reader-social .reader-form-footer{flex-direction:row;align-items:center}.reader-social .reader-form-footer small{max-width:55%}.reader-social .reader-form-footer button{white-space:nowrap}}
