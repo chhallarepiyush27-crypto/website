@@ -1,0 +1,62 @@
+import {PGlite} from '@electric-sql/pglite';
+import {readFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const db = new PGlite();
+await db.exec(`create role anon; create role authenticated; create schema auth;
+create table auth.users(id uuid primary key);
+create function auth.uid() returns uuid language sql as $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
+grant usage on schema auth to anon, authenticated;
+insert into auth.users values ('11111111-1111-4111-8111-111111111111'), ('22222222-2222-4222-8222-222222222222');`);
+await db.exec(await readFile('../supabase/reader-conversations.sql','utf8'));
+const post='/posts/2026-10-10-the-neutrino-who-walked-into-the-party-unnoticed.html';
+const other='/posts/another-post.html';
+async function actor(role, uid='') {
+  await db.exec('reset role');
+  await db.query("select set_config('request.jwt.claim.sub', $1, false)", [uid]);
+  await db.exec(`set role ${role}`);
+}
+async function rpc(name, params) { return (await db.query(`select public.${name}(${params.map((_,i)=>'$'+(i+1)).join(',')}) as result`,params)).rows[0].result; }
+await actor('anon');
+assert.equal((await rpc('blog_conversation',[post])).like_count,0);
+await assert.rejects(()=>rpc('blog_set_like',[post,true]),/permission denied/);
+await assert.rejects(()=>db.query('select * from reader_private.comments'),/permission denied/);
+await assert.rejects(()=>rpc('blog_conversation',['/not-a-post']),/Invalid article/);
+await actor('authenticated','11111111-1111-4111-8111-111111111111');
+assert.equal((await rpc('blog_set_like',[post,true])).like_count,1);
+assert.equal((await rpc('blog_set_like',[post,true])).like_count,1);
+assert.equal((await rpc('blog_conversation',[other])).like_count,0);
+let first=await rpc('blog_add_comment',[post,' Reader ',' <script>alert(1)</script> ','aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa']);
+assert.equal(first.comment_count,1); assert.equal(first.comments[0].author_name,'Reader');
+assert.equal(first.comments[0].body,'<script>alert(1)</script>');
+assert.equal((await rpc('blog_add_comment',[post,' Reader ',' <script>alert(1)</script> ','aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa'])).comment_count,1);
+await assert.rejects(()=>rpc('blog_add_comment',[post,'Reader','Changed','aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa']),/Request ID already used/);
+await assert.rejects(()=>rpc('blog_add_comment',[post,'Reader','Too soon','bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb']),/15 seconds/);
+await assert.rejects(()=>rpc('blog_add_comment',[post,'Reader',' ','cccccccc-cccc-4ccc-8ccc-cccccccccccc']),/Enter a name/);
+await assert.rejects(()=>db.query('delete from reader_private.likes'),/permission denied/);
+await actor('authenticated','22222222-2222-4222-8222-222222222222');
+assert.equal((await rpc('blog_conversation',[post])).liked,false);
+assert.equal((await rpc('blog_set_like',[post,true])).like_count,2);
+assert.equal((await rpc('blog_set_like',[post,false])).like_count,1);
+assert.equal((await rpc('blog_conversation',[post])).liked,false);
+await actor('authenticated');
+await assert.rejects(()=>rpc('blog_set_like',[post,true]),/Guest session required/);
+await actor('anon');
+const publicData=await rpc('blog_conversation',[post]);
+assert.equal(publicData.comments[0].user_id,undefined); assert.equal(publicData.comments[0].request_id,undefined);
+await db.exec('reset role');
+await db.exec(`insert into reader_private.comments(post_path,user_id,request_id,author_name,body,created_at)
+select '${post}','11111111-1111-4111-8111-111111111111',gen_random_uuid(),'Reader','Older comment',now()-interval '1 minute' from generate_series(1,24);`);
+await actor('anon');
+const page1=await rpc('blog_conversation',[post]);
+const page2=await rpc('blog_conversation',[post,page1.next_cursor]);
+assert.equal(page1.comments.length,20); assert.equal(page2.comments.length,5); assert.equal(page2.next_cursor,null);
+assert.equal(new Set([...page1.comments,...page2.comments].map(c=>c.id)).size,25);
+await actor('authenticated','11111111-1111-4111-8111-111111111111');
+await db.exec('reset role'); await db.exec("update reader_private.comments set created_at=now()-interval '1 minute'");
+await actor('authenticated','11111111-1111-4111-8111-111111111111');
+await assert.rejects(()=>rpc('blog_add_comment',[post,'Reader','Daily quota','dddddddd-dddd-4ddd-8ddd-dddddddddddd']),/Daily comment limit/);
+// Re-running the migration must preserve existing comments and likes.
+await db.exec('reset role'); await db.exec(await readFile('../supabase/reader-conversations.sql','utf8'));
+await actor('anon'); assert.equal((await rpc('blog_conversation',[post])).comment_count,25);
+console.log('PASS: guest permissions, private identities, per-post separation, idempotency, like ownership, comment validation, quotas, pagination, safe rerun');
+await db.close();
