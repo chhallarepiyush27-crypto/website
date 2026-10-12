@@ -66,3 +66,18 @@
 .blog-card-actions a,.blog-card-actions button{font:700 12px 'DM Sans',sans-serif;color:#18857b;background:none;border:0;padding:5px 0;text-decoration:none;cursor:pointer}
 .blog-post-card:first-child .blog-card-actions a,.blog-post-card:first-child .blog-card-actions button{color:#9de7da}
 .post-share-dialog :focus-visible{outline:3px solid #258c88;outline-offset:3px}
+
+/* Inline guest conversation: shared by every article. */
+#comments { scroll-margin-top: 100px; }
+.reader-comment-form { margin: 28px 0 16px; display: grid; gap: 10px; max-width: 760px; }
+.reader-comment-form label { font-weight: 600; color: #173a45; }
+.reader-comment-form input, .reader-comment-form textarea { padding: 14px 16px; font: inherit; color: #152d3a; background: #fff; border: 1px solid #b9d4cf; border-radius: 14px; width: 100%; box-sizing: border-box; }
+.reader-comment-form textarea { resize: vertical; min-height: 130px; }
+.reader-comment-form :focus-visible { outline: 3px solid #78c5b7; outline-offset: 3px; }
+.reader-form-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.reader-form-footer small { color: #536b73; }
+.reader-comment-form button, [data-more-comments] { border: 0; border-radius: 30px; background: #184d56; color: #fff; padding: 12px 20px; font: inherit; cursor: pointer; }
+[data-like-post][aria-pressed="true"] { background: #b8eedb; color: #143f40; }
+.reader-comment-form button:disabled, [data-like-post]:disabled { opacity: .55; cursor: not-allowed; }
+.reader-comment p { white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 580px) { .reader-form-footer { flex-direction: column; align-items: stretch; } .discussion-actions { flex-wrap: wrap; } }
