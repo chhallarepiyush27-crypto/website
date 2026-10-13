@@ -8,7 +8,7 @@ excerpt: Neutrinos pass through the universe almost unnoticed. IceCube gave scie
 ---
 
 <figure class="post-hero-image">
-  <img src="https://files.openai.com/file_000000008ac0823095daec756fbee07d" alt="Illustration of Francis Halzen beside the IceCube detector beneath Antarctic ice, with a Nobel Prize medal" loading="eager" decoding="async">
+  <img src="{{ '/images/nobel-neutrinos-icecube.jpg' | relative_url }}" alt="Illustration of Francis Halzen beside the IceCube detector beneath Antarctic ice, with a Nobel Prize medal" loading="eager" decoding="async">
   <figcaption>A quiet visitor from the cosmos, revealed by IceCube beneath the Antarctic ice.</figcaption>
 </figure>
 
