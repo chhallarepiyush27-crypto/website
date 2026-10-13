@@ -7,6 +7,11 @@ comment_issue: 7
 excerpt: Neutrinos pass through the universe almost unnoticed. IceCube gave scientists a way to catch the rare moment one interacts—and opened a new way to study the cosmos.
 ---
 
+<figure class="post-hero-image">
+  <img src="https://files.openai.com/file_000000008ac0823095daec756fbee07d" alt="Illustration of Francis Halzen beside the IceCube detector beneath Antarctic ice, with a Nobel Prize medal" loading="eager" decoding="async">
+  <figcaption>A quiet visitor from the cosmos, revealed by IceCube beneath the Antarctic ice.</figcaption>
+</figure>
+
 This week, the 2026 Nobel Prize in Physics was awarded to Francis Halzen for his decisive contributions to the IceCube Neutrino Observatory and the discovery of high-energy neutrinos of astrophysical origin. [IceCube](https://icecube.wisc.edu/news/awards/2026/10/francis-halzen-icecube-principal-investigator-wins-2026-physics-nobel-prize/)
 
 I have always found neutrinos strangely relatable.
@@ -35,4 +40,4 @@ That is why the 2026 Nobel Prize in Physics matters. The prize was awarded to Fr
 
 Some things do not announce themselves loudly. You may enter quietly, remain unnoticed, and leave without anyone realizing you were there. But if people build the right detector and pay close enough attention, even the most private visitor can tell us something extraordinary about the universe.
 
-[Read the IceCube announcement](https://icecube.wisc.edu/news/awards/2026/10/francis-halzen-icecube-principal-investigator-wins-2026-physics-nobel-prize/) · [Read the NSF announcement](https://www.nsf.gov/mps/updates/2026-nobel-prize-physics-awarded-nsf-icecube-neutrino)
+[Read the IceCube announcement](https://icecube.wisc.edu/news/awards/2026/10/francis-halzen-icecube-principal-investigator-wins-2026-physics-nobel-prize/) · [Read the NSF announcement](https://www.nsf.gov/mps/updates/2026-nobel-prize-physics-awarded-nsf-icecube)
