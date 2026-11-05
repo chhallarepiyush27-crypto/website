@@ -6,9 +6,9 @@ The previous Supabase reader integration is disconnected from the website. Its m
 
 ## Contact form
 
-The contact form posts to the existing Formspree form `maqdobdv`. The browser displays acceptance or failure, preserves drafts on failure, and includes a direct email fallback. Acceptance by Formspree does not prove inbox delivery.
+The contact form posts to Formspree form `xwllyawk`. Its email notification action is enabled and points to the site owner’s selected recipient. The browser displays acceptance or failure, preserves drafts on failure, and includes a direct email fallback. Acceptance by Formspree does not prove inbox delivery.
 
-To finish investigating missing email, sign in to the form owner's Formspree dashboard. Confirm this form belongs to the owner, inspect its submissions and spam, and check its target email and email notification workflow. Verify the intended recipient address, then submit one clearly labeled test and confirm it arrives. If accepted submissions do not arrive, check recipient spam and mail quarantine and Formspree's delivery troubleshooting. No provider recipient settings were changed in this update.
+To finish investigating missing email, sign in to the form owner's Formspree dashboard. Confirm this form belongs to the owner, inspect its submissions and spam, and check its target email and email notification workflow. Verify the intended recipient address, then submit one clearly labeled test and confirm it arrives. If accepted submissions do not arrive, check recipient spam and mail quarantine and Formspree's delivery troubleshooting. The former endpoint `maqdobdv` is no longer used by the contact page.
 
 ## Verification
 

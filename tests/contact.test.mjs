@@ -7,7 +7,7 @@ function setup(fetch, valid = true) {
   const status = {textContent: ''};
   const button = {textContent: 'Send message ↗', disabled: false};
   const form = {
-    action: 'https://formspree.io/f/maqdobdv', draft: 'Keep this message', resets: 0,
+    action: 'https://formspree.io/f/xwllyawk', draft: 'Keep this message', resets: 0,
     reportValidity: () => valid, querySelector: () => button,
     setAttribute() {}, removeAttribute() {},
     reset() {this.draft = ''; this.resets++;},
@@ -25,7 +25,7 @@ test('only confirmed acceptance clears the draft; duplicate submits are blocked'
   let complete, calls = 0;
   const state = setup((url, options) => {
     calls++;
-    assert.equal(url, 'https://formspree.io/f/maqdobdv');
+    assert.equal(url, 'https://formspree.io/f/xwllyawk');
     assert.equal(options.headers.Accept, 'application/json');
     assert.equal(options.body.draft, 'Keep this message');
     return new Promise(resolve => {complete = resolve;});
