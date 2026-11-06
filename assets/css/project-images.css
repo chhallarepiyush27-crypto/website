@@ -9,7 +9,6 @@
 .projects-page .project-figure img{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;object-position:center;margin:0;transition:transform .6s ease}
 .projects-page .info-card:hover .project-figure img{transform:scale(1.035)}
 .projects-page .project-figure figcaption{padding:12px 17px;border-top:1px solid #314b632e;color:#a1bad0;font:9px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.055em;background:#0d1c2d;min-height:38px}
-.projects-page .project-figure .decay-image{object-fit:contain;padding:7px;background:#0d202d}
 .projects-page .project-copy h2{font-size:22px;line-height:1.28}
 .projects-page #transmon-project{scroll-margin-top:100px;display:grid;grid-template-columns:1.03fr 1fr;padding:0;gap:0;background:linear-gradient(120deg,#142b41,#101f32);align-items:stretch}
 .projects-page #transmon-project:after{content:none}
@@ -24,3 +23,15 @@
 @media(max-width:820px){.projects-page #transmon-project{grid-template-columns:1fr}.projects-page #transmon-project .project-figure{grid-row:1;border-left:0;border-bottom:1px solid #35526c;min-height:0}.projects-page #transmon-project .project-image-frame{min-height:0;flex:none;aspect-ratio:16/9}.projects-page #transmon-project .project-copy{padding:30px}.projects-page #transmon-project .project-figure img{object-position:center 52%}}
 @media(max-width:680px){.projects-page .card-grid{gap:24px}.projects-page #transmon-project .project-image-frame{aspect-ratio:3/2}.projects-page #transmon-project .project-copy,.projects-page .project-copy{padding:25px}.projects-page #transmon-project .project-copy h2{font-size:26px}.projects-page .project-figure figcaption{font-size:9px;padding:11px 14px}.projects-page .project-copy h2{font-size:23px}.projects-page .project-copy>p{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.projects-page .project-figure img{transition:none}.projects-page .info-card:hover .project-figure img{transform:none}}
+
+/* Preserve complete research photographs, scale bars, and event labels. */
+.projects-page .project-figure figcaption{font-size:11px;line-height:1.55;letter-spacing:0;min-height:63px}
+.projects-page .project-figure figcaption a{color:#b8dced;text-decoration:underline;text-underline-offset:3px}
+.projects-page .project-figure .project-image-frame img{object-fit:contain;padding:0}
+.projects-page .project-image-frame.crystal-photo{background:#e9dfb4}
+.projects-page .project-image-frame.apparatus-photo{background:#e9ecee}
+.projects-page .project-image-frame.event-photo{background:#000}
+.projects-page .project-image-frame.chip-photo{background:#8f8073}
+.projects-page #transmon-project .project-image-frame{min-height:350px}
+.projects-page .info-card:hover .project-figure img{transform:none}
+@media(max-width:820px){.projects-page #transmon-project .project-image-frame{min-height:0;aspect-ratio:1080/909}}
