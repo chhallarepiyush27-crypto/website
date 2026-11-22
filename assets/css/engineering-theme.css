@@ -30,25 +30,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 #transmon-project{grid-column:1/-1;background:linear-gradient(120deg,#142b41,#101f32);padding:37px 40px;position:relative;overflow:hidden;border-color:#4b6e89}#transmon-project:after{content:'';position:absolute;right:-45px;top:-65px;width:250px;height:250px;border:1px solid #85bcda26;border-radius:19px;transform:rotate(-14deg);box-shadow:0 0 0 21px #85bcda06;pointer-events:none}#transmon-project h2{font-size:30px;max-width:780px;position:relative;z-index:1}#transmon-project p{max-width:850px;position:relative;z-index:1}#transmon-project .small-note{display:table;padding:6px 10px;background:#1e3c51;border:1px solid #43667e;border-radius:4px;color:#b6dfed!important;font:11px ui-monospace,SFMono-Regular,Consolas,monospace;margin-bottom:19px}.current-research{border-top:2px solid #81c6df}
 @media(max-width:680px){#transmon-project{padding:25px}#transmon-project h2{font-size:25px}}
 
-/* Personal moments — editorial photo grid, kept within the engineering palette. */
-.moments{background:#0a1422;border-top:1px solid #1d3045;border-bottom:1px solid #1d3045;overflow:hidden}
-.moments-grid{display:grid;grid-template-columns:1.12fr .88fr;grid-template-rows:repeat(2,minmax(220px,1fr));gap:18px;position:relative}
-.moment-card{margin:0;min-width:0;position:relative;overflow:hidden;border:1px solid #30465d;border-radius:12px;background:#101e30;isolation:isolate}
-.moment-feature{grid-row:span 2;min-height:570px}
-.moment-city,.moment-community{min-height:275px}
-.moment-image{position:absolute;inset:0;overflow:hidden;background:#13243a}
-.moment-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#08111a05 35%,#08111ad9 100%),linear-gradient(135deg,#8fdfef12,#b4a5f510);pointer-events:none}
-.moment-image img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .7s;filter:saturate(.86) contrast(1.03)}
-.moment-feature .moment-image img{object-position:center 43%}
-.moment-city .moment-image img{object-position:center 45%}
-.moment-community .moment-image img{object-position:center 40%}
-.moment-card:hover .moment-image img{transform:scale(1.045);filter:saturate(1.04) contrast(1.04)}
-.moment-card figcaption{position:absolute;z-index:1;left:clamp(19px,3vw,30px);right:clamp(19px,3vw,30px);bottom:clamp(18px,3vw,27px);display:flex;flex-direction:column;gap:7px}
-.moment-index{font:10px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.14em;color:#a5e6f2;text-shadow:0 1px 12px #07121c}
-.moment-caption{font:600 clamp(15px,1.55vw,20px)/1.35 'Manrope',sans-serif;letter-spacing:-.025em;color:#f0f5fc;max-width:460px;text-shadow:0 2px 15px #07121c}
-.moment-feature .moment-caption{font-size:clamp(19px,2vw,26px);max-width:440px}
-.moment-card:before{content:"";position:absolute;z-index:2;inset:12px;border:1px solid #b3dff02b;border-radius:7px;pointer-events:none;opacity:.7;transition:inset .35s,border-color .35s}
-.moment-card:hover:before{inset:8px;border-color:#a9e5f06b}
-@media(max-width:760px){.moments-grid{grid-template-columns:1fr;grid-template-rows:auto}.moment-feature{grid-row:auto;min-height:460px}.moment-city,.moment-community{min-height:310px}}
-@media(max-width:480px){.moment-feature{min-height:390px}.moment-city,.moment-community{min-height:270px}.moment-card:before{inset:8px}}
-@media(prefers-reduced-motion:reduce){.moment-image img,.moment-card:before{transition:none}}
+
+/* Personal photographs are woven into existing editorial sections. */
+.about-home-photo{margin:26px 0 0;max-width:330px;position:relative;border:1px solid #36516b;border-radius:12px;overflow:hidden;background:#101f31}
+.about-home-photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 42%;filter:saturate(.88);transition:transform .55s ease,filter .55s ease}
+.about-home-photo:hover img{transform:scale(1.035);filter:saturate(1.04)}
+.about-home-photo figcaption{display:flex;flex-direction:column;gap:5px;padding:13px 15px;background:#101f31}
+.about-home-photo figcaption span:first-child{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.15em;color:#91d9e9}
+.about-home-photo figcaption span:last-child{font:500 13px/1.4 'DM Sans',sans-serif;color:#c1d2e2}
+.about-outside{display:grid;grid-template-columns:1fr minmax(170px,.72fr);gap:24px;align-items:center;margin-top:28px;padding-top:24px;border-top:1px solid #304257}
+.about-outside h2{margin-top:0}
+.about-outside figure{margin:0;min-width:0}
+.about-outside img{display:block;width:100%;height:220px;object-fit:cover;object-position:center 43%;border:1px solid #36516b;border-radius:10px}
+.about-outside figcaption{font-size:11px;color:#91a9c1;margin-top:8px}
+@media(max-width:680px){.about-outside{grid-template-columns:1fr}.about-outside img{height:240px}.about-home-photo{max-width:100%}}
+@media(prefers-reduced-motion:reduce){.about-home-photo img{transition:none}}
