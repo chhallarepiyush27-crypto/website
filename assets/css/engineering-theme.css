@@ -45,3 +45,91 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .about-outside figcaption{font-size:11px;color:#91a9c1;margin-top:8px}
 @media(max-width:680px){.about-outside{grid-template-columns:1fr}.about-outside img{height:240px}.about-home-photo{max-width:100%}}
 @media(prefers-reduced-motion:reduce){.about-home-photo img{transition:none}}
+
+
+/* Editorial photo treatment: restrained cyan instrumentation, natural crops,
+   and responsive framing that feels native to the engineering portfolio. */
+.about-home-photo,
+.about-outside figure{
+  isolation:isolate;
+  box-shadow:0 18px 48px #02081266,0 0 0 1px #8fdfef12;
+}
+.about-home-photo{max-width:340px;border-radius:14px}
+.about-home-photo:before,
+.about-outside figure:before{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:10px;
+  border:1px solid #9bdfea55;
+  border-radius:8px;
+  pointer-events:none;
+}
+.about-home-photo:after,
+.about-outside figure:after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:0;
+  background:linear-gradient(180deg,#07132105 48%,#0713219c 100%);
+  pointer-events:none;
+}
+.about-home-photo img{
+  aspect-ratio:4/5;
+  object-fit:cover;
+  object-position:center 46%;
+  filter:saturate(.82) contrast(1.04) brightness(.94);
+}
+.about-home-photo figcaption{
+  position:relative;
+  z-index:3;
+  background:linear-gradient(90deg,#0c1b2c,#10243a);
+  border-top:1px solid #42627a;
+}
+.about-home-photo figcaption span:first-child:before{
+  content:"";
+  display:inline-block;
+  width:17px;
+  height:1px;
+  margin:0 8px 3px 0;
+  background:#8fdfef;
+}
+.about-outside{grid-template-columns:minmax(0,1fr) minmax(190px,.68fr);gap:28px}
+.about-outside figure{
+  position:relative;
+  overflow:hidden;
+  border:1px solid #36516b;
+  border-radius:13px;
+  background:#101f31;
+  box-shadow:0 16px 40px #02081255;
+}
+.about-outside img{
+  height:auto;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  object-position:center 58%;
+  border:0;
+  border-radius:0;
+  filter:saturate(.84) contrast(1.04) brightness(.94);
+  transition:transform .55s ease,filter .55s ease;
+}
+.about-outside figure:hover img{
+  transform:scale(1.025);
+  filter:saturate(.98) contrast(1.04) brightness(1);
+}
+.about-outside figcaption{
+  position:relative;
+  z-index:3;
+  margin:0;
+  padding:11px 13px 13px;
+  color:#b9cde0;
+  background:#101f31;
+  border-top:1px solid #36516b;
+  font-size:11px;
+}
+@media(max-width:680px){
+  .about-home-photo{max-width:100%}
+  .about-outside{grid-template-columns:minmax(0,1fr)}
+  .about-outside img{height:auto;aspect-ratio:5/4;object-position:center 58%}
+}
+@media(prefers-reduced-motion:reduce){.about-outside img{transition:none}}
